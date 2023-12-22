@@ -1,9 +1,9 @@
-import { Inter } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import CommonLayout from './commonLayout'
 import Link from 'next/link'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const roboto = Roboto({ weight:'500',subsets: ['latin'] })
 
 export const metadata = {
   title: 'Create Next App',
@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <div>
           <div className='logoIcon'>
             <Link href="/">Logo</Link>

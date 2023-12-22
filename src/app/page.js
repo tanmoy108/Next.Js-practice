@@ -8,6 +8,7 @@ export default function Home() {
   }
   return (
     <main className={styles.main}>
+      <Image src={"https://www.krishnatemple.com/wp-content/uploads/2022/04/Festival_Gita_Jayanti.jpg"} width={400} height={200}/>
       <div>
         Welcome to Vedic Library
       </div>
