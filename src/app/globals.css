@@ -16,3 +16,7 @@ ul li{
 h1{
   color: brown;
 }
+a{
+  text-decoration: none;
+  color: black;
+}

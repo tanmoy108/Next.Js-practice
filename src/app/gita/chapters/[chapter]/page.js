@@ -1,20 +1,36 @@
-'use client'
-import { useRouter } from "next/navigation"
-const Chapter = ({params}) => {
-  const router = useRouter()
-    console.log(params)
-    console.log(params.chapter)
+import Link from "next/link";
+import Button from "./button";
+import styles from "../../page.module.css"
 
-    const HandleBack = ()=>{
-      router.push("/gita")
-    }
+export async function dbSlok() {
+  const fetchApi = await fetch("http://localhost:3000/api/gita");
+  const json = await fetchApi.json();
+  return json.result;
+}
+
+const Chapter = async ({ params }) => {
+  // console.log(params);
+  // console.log(params.chapter);
+  const fun = await dbSlok()
+  console.log(fun)
 
   return (
     <div>
       <h1>{`Chapter ${params.chapter}`}</h1>
-      <button onClick={HandleBack} >back to the root</button>
-    </div>
-  )
-}
+      <Button />
+      <br/>
+      {
+        fun.map((item)=>{
+          return(
+            <Link className={styles.main} href={`${params.chapter}/slok/${item.id}`}>
+              ={item.description}
+            </Link>
 
-export default Chapter
+          )
+        })
+      }
+    </div>
+  );
+};
+
+export default Chapter;

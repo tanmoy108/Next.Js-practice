@@ -28,3 +28,24 @@ export const db = [
     language: "hindi",
   },
 ];
+
+export const info = [
+  {
+    name: "tanmoy",
+    age:34,
+    gender:"male",
+    designation:"engineer"
+  },
+  {
+    name: "punam",
+    age:23,
+    gender:"female",
+    designation:"doctor"
+  },
+  {
+    name: "priyam",
+    age:54,
+    gender:"male",
+    designation:"engineer"
+  },
+]
