@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const Form = () => {
   const [info, setInfo] = useState({
-    fname: "",
+    name: "",
     age: "",
     gender: "",
     designation: "",
@@ -22,23 +22,27 @@ const Form = () => {
   };
 
   const HandleClick = async () => {
-    setCurrent(() => {
-      return {
-        ...info,
-      };
-    });
+    // setCurrent(() => {
+    //   return {
+    //     ...info,
+    //   };
+    // });
 
     try {
-      const fetchResult = await fetch("http://localhost:3000/api/about", {
+      console.log(info);
+      const fetchResult = await fetch("http://localhost:3000/api/users", {
         method: "POST",
         body: JSON.stringify(info),
-        headers: { "Content-Type": "application/json" },
+        // headers: { "Content-Type": "application/json" },
       });
       if (!fetchResult.ok) {
         throw new Error(`HTTP error! Status: ${fetchResult.status}`);
       }
+      console.log(fetchResult);
       const data = await fetchResult.json();
-      alert("successed")
+      if(data.success){
+      alert("successed")}
+      console.log(data)
     } catch (error) {
       console.error("Error during fetch:", error);
     }
@@ -48,22 +52,25 @@ const Form = () => {
     <div>
       <input
         type="text"
-        value={info.fname}
+        value={info.name}
         onChange={handleType}
-        name="fname"
+        name="name"
+        placeholder="name"
       />
-      <input type="number" value={info.age} onChange={handleType} name="age" />
+      <input type="number" value={info.age} onChange={handleType} name="age" placeholder="age" />
       <input
         type="text"
         value={info.gender}
         onChange={handleType}
         name="gender"
+        placeholder="gender"
       />
       <input
         type="text"
         value={info.designation}
         onChange={handleType}
         name="designation"
+        placeholder="designation"
       />
       <button onClick={HandleClick}>Send</button>
     </div>

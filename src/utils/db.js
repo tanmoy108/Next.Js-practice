@@ -31,18 +31,21 @@ export const db = [
 
 export const info = [
   {
+    id:1,
     name: "tanmoy",
     age:34,
     gender:"male",
     designation:"engineer"
   },
   {
+    id: 2,
     name: "punam",
     age:23,
     gender:"female",
     designation:"doctor"
   },
   {
+    id: 3,
     name: "priyam",
     age:54,
     gender:"male",
