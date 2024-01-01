@@ -11,11 +11,26 @@ export default function FormPage() {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name === 'file' ? files[0] : value,
-    }));
+    if (name === 'file' && files.length > 0) {
+      const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      const file = files[0];
+
+      if (allowedFileTypes.includes(file.type)) {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: file,
+        }));
+      } else {
+        alert('Only PNG, JPG, and JPEG files are allowed.');
+      }
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
+
 
   const handleSubmit =async (e) => {
     e.preventDefault();

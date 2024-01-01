@@ -5,11 +5,21 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import PdfViewer from "./components/PdfViewer";
+import useDownloader from "react-use-downloader"; 
+import vercel from "../../public/vercel.svg"
 
 export default function Home() {
   const router = useRouter()
   const [userArray,setUserArray] = useState([]);
   const [userFile,setUserFile] = useState([]);
+
+  const { size, elapsed, percentage, download,
+    cancel, error, isInProgress } =
+    useDownloader();
+
+  const fileUrl = "/File.pdf";
+  const filename = "File.pdf"; 
+
   useEffect(() => {
     const getUsers = async () => {
       const fetchData = await fetch("http://localhost:3000/api/users");
@@ -76,12 +86,26 @@ export default function Home() {
       </div>
       <div>
         {
-          userFile.map((item)=>{
+          userFile.map((item,index)=>{
             return(
-              item.file  && <div>
+              item.file  && <div key={index}>
                 <h1>type: {item.type}</h1>
                 <h1>numbere: {item.number}</h1>
-                <Image src={item.file} alt={item.type} width={200} height={200} />
+                <Image src={item.file.split(".")[1] === "pdf"? vercel:item.file} alt={item.type} width={200} height={200} />
+                <p>Download is in {isInProgress ?
+                  "in progress" : "stopped"}</p> 
+                <button>Download image</button>
+                
+                <button onClick={() => download(item.file, item.file.split("/")[1])}>
+                  Click to download the file
+                </button>
+                <button onClick={() => cancel()}>
+                  Cancel the download
+                </button>
+                <p>Download size in bytes {size}</p>
+                <label for="file">Downloading progress:</label>
+                <progress id="file" value={percentage} max="100" />
+                <p>Elapsed time in seconds {elapsed}</p>
                 {/* <iframe
                   src={item.file}
                   title={item.type}
@@ -99,3 +123,29 @@ export default function Home() {
     </main>
   );
 }
+
+
+
+// for Pdf
+// const handleChange = (e) => {
+//     const { name, value, files } = e.target;
+
+//     if (name === 'file' && files.length > 0) {
+//       const allowedFileType = 'application/pdf';
+//       const file = files[0];
+
+//       if (file.type === allowedFileType) {
+//         setFormData((prevData) => ({
+//           ...prevData,
+//           [name]: file,
+//         }));
+//       } else {
+//         alert('Only PDF files are allowed.');
+//       }
+//     } else {
+//       setFormData((prevData) => ({
+//         ...prevData,
+//         [name]: value,
+//       }));
+//     }
+//   };
